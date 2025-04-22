@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNO - Juego de Cartas Multijugador</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1>UNO</h1>
+            <div class="game-controls">
+                <button id="rules-btn">Reglas</button>
+                <button id="new-game-btn">Nuevo Juego</button>
+                <div class="player-count">
+                    <label for="player-count">Jugadores:</label>
+                    <select id="player-count">
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4" selected>4</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reglas del juego -->
+        <div id="rules-modal" class="rules-modal hidden">
+            <div class="rules-content">
+                <h2>Reglas del UNO</h2>
+                <button id="close-rules" class="close-rules">&times;</button>
+                <div class="rules-text">
+                    <h3>Objetivo del Juego</h3>
+                    <p>Ser el primer jugador en quedarse sin cartas.</p>
+                    
+                    <h3>Preparación</h3>
+                    <p>Cada jugador recibe 7 cartas. El resto forma el mazo de robo. La primera carta del mazo se coloca boca arriba para formar el mazo de descarte.</p>
+                    
+                    <h3>Juego</h3>
+                    <p>Los jugadores deben hacer coincidir una carta de su mano con la carta superior del mazo de descarte, ya sea por número, color o símbolo.</p>
+                    
+                    <h3>Cartas Especiales</h3>
+                    <ul>
+                        <li><strong>Saltar (Skip):</strong> El siguiente jugador pierde su turno.</li>
+                        <li><strong>Reversa (Reverse):</strong> Cambia la dirección del juego. En juegos de 2 jugadores, actúa como un Saltar.</li>
+                        <li><strong>Roba Dos (+2):</strong> El siguiente jugador debe robar 2 cartas y pierde su turno.</li>
+                        <li><strong>Comodín (Wild):</strong> Permite al jugador elegir el color que sigue.</li>
+                        <li><strong>Comodín Roba Cuatro (+4):</strong> El siguiente jugador debe robar 4 cartas, pierde su turno y el jugador actual elige el color.</li>
+                    </ul>
+                    
+                    <h3>Robar Cartas</h3>
+                    <p>Si un jugador no puede jugar una carta, debe robar una del mazo. Si puede jugarla, puede hacerlo inmediatamente.</p>
+                    
+                    <h3>Decir "UNO"</h3>
+                    <p>Cuando un jugador tiene solo una carta, debe decir "UNO". Si no lo hace y otro jugador lo nota, debe robar 2 cartas.</p>
+                    
+                    <h3>Ganar</h3>
+                    <p>El primer jugador que se quede sin cartas gana la ronda.</p>
+
+                    <h3>Desafío Matemático</h3>
+                    <p>Cuando un jugador recibe un +4, se le presentará una pregunta matemática. Si responde correctamente, no recibirá las 4 cartas y continuará su turno.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de preguntas -->
+        <div id="question-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>¡Desafío Matemático!</h2>
+                <p>Responde correctamente para evitar recibir 4 cartas:</p>
+                <p id="question-text" class="question-text"></p>
+                <div id="options-container" class="options-container">
+                    <!-- Options will be generated here -->
+                </div>
+                <button id="submit-answer" class="submit-answer">Responder</button>
+                <button id="close-question" class="close-modal">&times;</button>
+            </div>
+        </div>
+
+        <div id="game-setup" class="game-setup">
+            <h2>Configuración del Juego</h2>
+            <div id="player-names-container">
+                <!-- Player name inputs will be generated here -->
+            </div>
+            <button id="start-game-btn">Comenzar Juego</button>
+        </div>
+
+        <div id="game-board" class="game-board hidden">
+            <div class="game-status">
+                <div id="current-player" class="current-player"></div>
+                <div id="game-message" class="game-message"></div>
+            </div>
+
+            <div class="play-area">
+                <div class="deck-area">
+                    <div id="deck" class="deck">
+                        <div class="card card-back">
+                            <div class="card-inner">UNO</div>
+                        </div>
+                    </div>
+                    <div id="discard-pile" class="discard-pile"></div>
+                </div>
+
+                <div id="color-selector" class="color-selector hidden">
+                    <div class="color-option red" data-color="red"></div>
+                    <div class="color-option blue" data-color="blue"></div>
+                    <div class="color-option green" data-color="green"></div>
+                    <div class="color-option yellow" data-color="yellow"></div>
+                </div>
+            </div>
+
+            <div id="players-container" class="players-container">
+                <!-- Player hands will be generated here -->
+            </div>
+
+            <div class="action-buttons">
+                <button id="draw-card-btn">Robar Carta</button>
+                <button id="next-player-btn" class="hidden">Siguiente Jugador</button>
+            </div>
+        </div>
+
+        <div id="game-over" class="game-over hidden">
+            <h2>¡Juego Terminado!</h2>
+            <div id="winner-display"></div>
+            <button id="play-again-btn">Jugar de Nuevo</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
